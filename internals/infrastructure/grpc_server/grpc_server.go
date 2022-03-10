@@ -2,19 +2,17 @@ package grpcserver
 
 import (
 	"fmt"
+	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/config"
+	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller"
 	controllerProduct "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/product"
+	apiV1 "github.com/robowealth-mutual-fund/blueprint-roa-golang/pkg/api/v1"
+	grpc_health_v1 "github.com/robowealth-mutual-fund/blueprint-roa-golang/pkg/grpc/health/v1"
+	"google.golang.org/grpc"
 	"net"
 	"os"
 	"os/signal"
 	"strconv"
 	"syscall"
-
-	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/config"
-	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller"
-	apiV1Grpc "github.com/robowealth-mutual-fund/blueprint-roa-golang/pkg/api/v1"
-	grpc_health_v1 "github.com/robowealth-mutual-fund/blueprint-roa-golang/pkg/grpc/health/v1"
-
-	"google.golang.org/grpc"
 )
 
 // Server ...
@@ -29,8 +27,8 @@ type Server struct {
 // Configure ...
 func (s *Server) Configure() {
 	grpc_health_v1.RegisterHealthServer(s.Server, s.HealthCtrl)
-	apiV1Grpc.RegisterPingPongServiceServer(s.Server, s.PingPongCtrl)
-	apiV1Grpc.RegisterProductServiceServer(s.Server, s.ProductCtrl)
+	apiV1.RegisterPingPongServiceServer(s.Server, s.PingPongCtrl)
+	apiV1.RegisterProductServiceServer(s.Server, s.ProductCtrl)
 }
 
 // Start ...

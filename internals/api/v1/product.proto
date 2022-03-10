@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 package api_v1;
+import "google/api/annotations.proto";
 
 option go_package = "/.;api_v1";
 
@@ -33,5 +34,10 @@ message CreateResponse{
 
 
 service ProductService {
-  rpc Create(CreateRequest) returns (CreateResponse);
+  rpc Create(CreateRequest) returns (CreateResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/product"
+      body: "*",
+    };
+  }
 }
