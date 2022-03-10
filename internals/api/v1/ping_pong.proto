@@ -1,0 +1,16 @@
+  
+syntax = "proto3";
+
+package api_v1;
+option go_package = "/.;api_v1";
+
+message PingPong {
+  // @inject_tag: validate:"required,min=3"
+  string msg = 1;
+  // @inject_tag: validate:"required,min=10"
+  int32 ball = 2;
+}
+
+service PingPongService {
+  rpc StartPing (PingPong) returns (PingPong) {}
+}

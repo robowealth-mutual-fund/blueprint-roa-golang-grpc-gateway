@@ -1,0 +1,56 @@
+include:
+  - project: robowealth/operation/gitlab-ci-shared-library
+    ref: master
+    file:
+      - deploy/build.gitlab-ci.yml
+      - deploy/k8s.gitlab-ci.yml
+
+default:
+  tags:
+    - nonprod
+
+stages:
+  - build
+  - deploy
+
+
+deploy:develop:
+  extends: .deploy
+  variables:
+    K8S_NAMESPACE: develop
+    K8S_CLUSTER_NAME: roa-nonprod-cluster
+    K8S_REGION: asia-southeast1
+    HELM_CHART_NAME: "common-services"
+    HELM_CHART_VERSION: "1.4.7"
+  environment:
+    name: develop
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop" && $CI_COMMIT_REF_PROTECTED == "true"
+    - if: $CI_COMMIT_BRANCH =~ /^feature/ && $CI_COMMIT_TITLE =~ /\[manual-deploy\]/
+
+deploy:sit:
+  extends: .deploy
+  variables:
+    K8S_NAMESPACE: sit
+    K8S_CLUSTER_NAME: roa-nonprod-cluster
+    K8S_REGION: asia-southeast1
+    HELM_CHART_NAME: "common-services"
+    HELM_CHART_VERSION: "1.4.7"
+  environment:
+    name: sit
+  rules:
+    - if: $CI_COMMIT_BRANCH =~ /^release/ && $CI_COMMIT_REF_PROTECTED == "true"
+
+deploy:uat:
+  extends: .deploy:tag
+  variables:
+    K8S_NAMESPACE: uat
+    K8S_CLUSTER_NAME: roa-uat-cluster
+    K8S_REGION: asia-southeast1
+    HELM_CHART_NAME: "common-services"
+    HELM_CHART_VERSION: "1.4.7"
+    CI_DEBUG_TRACE: "true"
+  environment:
+    name: uat
+  rules:
+    - if: $CI_COMMIT_TAG
