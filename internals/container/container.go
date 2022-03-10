@@ -2,11 +2,13 @@ package container
 
 import (
 	"fmt"
+	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/config"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller"
 	controllerProduct "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/product"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/infrastructure/database"
 	grpcServer "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/infrastructure/grpc_server"
+	httpServer "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/infrastructure/http_server"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/infrastructure/jaeger"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/infrastructure/logrus"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/repository/postgres"
@@ -14,6 +16,7 @@ import (
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/service/product/wrapper"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/utils"
 	"go.uber.org/dig"
+	"net/http"
 )
 
 type Container struct {
@@ -28,6 +31,9 @@ func (c *Container) Configure() error {
 		config.NewConfiguration,
 		grpcServer.NewServer,
 		database.NewServerBase,
+		http.NewServeMux,
+		httpServer.NewServer,
+		runtime.NewServeMux,
 		jaeger.NewJaeger,
 		logrus.NewLog,
 		controller.NewHealthZController,
@@ -52,8 +58,12 @@ func (c *Container) Configure() error {
 func (c *Container) Start() error {
 	fmt.Println("Start Container")
 
-	if err := c.container.Invoke(func(s *grpcServer.Server) {
+	if err := c.container.Invoke(func(s *grpcServer.Server, h *httpServer.Server) {
+		go func() {
+			_ = h.Start()
+		}()
 		s.Start()
+
 	}); err != nil {
 		fmt.Printf("%s", err)
 
