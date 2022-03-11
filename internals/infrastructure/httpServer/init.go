@@ -19,7 +19,7 @@ type Server struct {
 }
 
 func (s *Server) Configure(ctx context.Context, opts []grpc.DialOption) {
-	apiV1.RegisterProductServiceHandlerFromEndpoint(ctx, s.Server, "0.0.0.0:"+strconv.Itoa(s.Config.HttpPort), opts)
+	apiV1.RegisterProductServiceHandlerFromEndpoint(ctx, s.Server, "0.0.0.0:"+strconv.Itoa(s.Config.Port), opts)
 }
 
 func NewServer(config config.Configuration, rmux *runtime.ServeMux, httpMux *http.ServeMux, productCtrl *controllerProduct.Controller) *Server {

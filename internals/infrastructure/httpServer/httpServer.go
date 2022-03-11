@@ -13,6 +13,7 @@ func (s *Server) Start() error {
 		Addr:    ":" + strconv.Itoa(s.Config.HttpPort),
 		Handler: s.HttpMux,
 	}
+	s.HttpMux.Handle("/", s.Server)
 
 	// graceful shutdown
 	c := make(chan os.Signal, 1)
