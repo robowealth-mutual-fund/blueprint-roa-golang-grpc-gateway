@@ -17,7 +17,8 @@ watch:
 pbgen:
 	protoc --proto_path=internals/api/v1 --go_out=plugins=grpc:pkg/grpc/health/v1 health.proto
 	protoc --proto_path=internals/api/v1 --go_out=plugins=grpc:pkg/api/v1 ping_pong.proto
-	protoc --proto_path=internals/api/v1 --proto_path=third_party --go_out=plugins=grpc:pkg/api/v1 product.proto
+	protoc --proto_path=internals/api/v1 --proto_path=thirdparty --go_out=plugins=grpc:pkg/api/v1 product.proto
+	protoc --proto_path=internals/api/v1 --proto_path=thirdparty --grpc-gateway_out=logtostderr=true:pkg/api/v1 product.proto
 	protoc-go-inject-tag -input=pkg/api/v1/ping_pong.pb.go
 	protoc-go-inject-tag -input=pkg/api/v1/product.pb.go
 
