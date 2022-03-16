@@ -1,6 +1,8 @@
 package grpcserver
 
 import (
+	grpcErrors "git.robodev.co/imp/shared-utility/grpc_errors"
+	validatorUtils "git.robodev.co/imp/shared-utility/validator"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/config"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller"
 	controllerProduct "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/product"
@@ -29,11 +31,11 @@ func NewServer(
 	healthCtrl *controller.HealthZController,
 	pingPongCtrl *controller.PingPongController,
 	productCtrl *controllerProduct.Controller,
-// v *validator.CustomValidator,
+	validator *validatorUtils.CustomValidator,
 ) *Server {
 	option := grpc.ChainUnaryInterceptor(
-		// grpc_errors.UnaryServerInterceptor(),
-		// validator.UnaryServerInterceptor(v),
+		grpcErrors.UnaryServerInterceptor(),
+		validatorUtils.UnaryServerInterceptor(validator),
 	)
 
 	s := &Server{

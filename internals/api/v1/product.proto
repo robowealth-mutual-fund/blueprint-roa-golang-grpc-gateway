@@ -8,24 +8,24 @@ option go_package = "/.;api_v1";
 
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
   info: {
-    title: "Product Service";
-    version: "1.0";
+    title: "Product Service"
+    version: "1.0"
     contact: {
-      name: "blueprint-roa-golang-grpc-gateway";
-      url: "http://localhost:3001";
-      email: "chat@robowealth.co.th";
-    };
-  };
-  schemes: HTTP;
-  consumes: "application/json";
-  produces: "application/json";
+      name: "blueprint-roa-golang-grpc-gateway"
+      url: "http://localhost:3001"
+      email: "chat@robowealth.co.th"
+    }
+  }
+  schemes: HTTP
+  consumes: "application/json"
+  produces: "application/json"
   responses: {
-    key: "404";
+    key: "404"
     value: {
-      description: "Returned when the resource does not exist.";
+      description: "Returned when the resource does not exist."
       schema: {
         json_schema: {
-          type: STRING;
+          type: STRING
         }
       }
     }

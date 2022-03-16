@@ -25,6 +25,5 @@ func (c *Controller) Create(ctx context.Context, request *apiV1.CreateRequest) (
 	if err != nil {
 		return nil, err
 	}
-
 	return &apiV1.CreateResponse{Id: int32(id)}, nil
 }
