@@ -1,5 +1,5 @@
 # Start from golang base image
-FROM golang:1.14.1-alpine as dependencies
+FROM golang:1.17.3-alpine3.13 as dependencies
 
 ENV GO11MODULE=on
 ENV GOPROXY="https://goproxy.io,direct"
@@ -7,13 +7,20 @@ ENV GOPRIVATE="https://git.robodev.co/*"
 ENV GONOSUMDB="git.robodev.co/*"
 ENV GITLAB_USERNAME="go_dependency"
 ENV GITLAB_TOKEN="x7ss8fHmSLmJfCMo-5Lz"
-
+ENV GOROOT=/usr/local/go
+ENV GOPATH=$HOME/go
+ENV GOBIN=$GOPATH/bin
+ENV PATH=$PATH:$GOROOT:$GOPATH:$GOBIN
 # Install git.
 # Git is required for fetching the dependencies.
-RUN apk update && apk add --no-cache git make gcc libc-dev protobuf-dev
 
-RUN go get github.com/golang/protobuf/protoc-gen-go
-RUN go get github.com/favadi/protoc-go-inject-tag
+RUN apk update && apk add --no-cache git make gcc libc-dev protobuf-dev protoc grpc
+
+RUN go install github.com/favadi/protoc-go-inject-tag@v1.3.0
+RUN go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2.0
+RUN go install github.com/golang/protobuf/protoc-gen-go@v1.5.2
+RUN go install github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway@v1.16.0
+RUN go install github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger@v1.16.0
 
 RUN git config \
 --global \

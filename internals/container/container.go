@@ -2,6 +2,7 @@ package container
 
 import (
 	"fmt"
+	"git.robodev.co/imp/shared-utility/validator"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/config"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller"
@@ -38,6 +39,7 @@ func (c *Container) Configure() error {
 		logrus.NewLog,
 		controller.NewHealthZController,
 		controller.NewPingPongController,
+		validator.NewCustomValidator,
 		controllerProduct.NewController,
 		serviceProduct.NewService,
 		postgres.NewRepository,
@@ -58,7 +60,7 @@ func (c *Container) Configure() error {
 func (c *Container) Start() error {
 	fmt.Println("Start Container")
 
-	if err := c.container.Invoke(func(s *grpcServer.Server, h *httpServer.Server) {
+	if err := c.container.Invoke(func(s *grpcServer.Server, h *httpServer.Server, v *validator.CustomValidator) {
 		go func() {
 			_ = h.Start()
 		}()
