@@ -18,8 +18,10 @@ pbgen:
 	protoc --proto_path=internals/api/v1 --go_out=plugins=grpc:pkg/grpc/health/v1 health.proto
 	protoc --proto_path=internals/api/v1 --go_out=plugins=grpc:pkg/api/v1 ping_pong.proto
 	protoc --proto_path=internals/api/v1 --proto_path=thirdparty --go_out=plugins=grpc:pkg/api/v1 --grpc-gateway_out=logtostderr=true:pkg/api/v1 --swagger_out=logtostderr=true:swagger product.proto
+	protoc --proto_path=internals/api/v1 --proto_path=thirdparty --go_out=plugins=grpc:pkg/api/v1 --grpc-gateway_out=logtostderr=true:pkg/api/v1 --swagger_out=logtostderr=true:swagger category.proto
 	protoc-go-inject-tag -input=pkg/api/v1/ping_pong.pb.go
 	protoc-go-inject-tag -input=pkg/api/v1/product.pb.go
+	protoc-go-inject-tag -input=pkg/api/v1/category.pb.go
 
 .PHONY: stringer
 stringer:

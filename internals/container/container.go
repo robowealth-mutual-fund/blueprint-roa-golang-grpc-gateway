@@ -6,6 +6,7 @@ import (
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/config"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller"
+	controllerCategory "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/category"
 	controllerProduct "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/product"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/infrastructure/database"
 	grpcServer "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/infrastructure/grpcServer"
@@ -13,6 +14,7 @@ import (
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/infrastructure/jaeger"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/infrastructure/logrus"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/repository/postgres"
+	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/service/category"
 	serviceProduct "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/service/product"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/service/product/wrapper"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/utils"
@@ -45,8 +47,9 @@ func (c *Container) Configure() error {
 		postgres.NewRepository,
 		utils.NewUtils,
 		utils.NewCustomValidator,
+		category.NewService,
+		controllerCategory.NewController,
 	}
-
 	for _, service := range servicesConstructors {
 		if err := c.container.Provide(service); err != nil {
 			return err
