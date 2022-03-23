@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/utils"
-	api_1 "github.com/robowealth-mutual-fund/blueprint-roa-golang/pkg/api/v1"
+	apiV1 "github.com/robowealth-mutual-fund/blueprint-roa-golang/pkg/api/v1"
 )
 
 // PingPongController ...
@@ -13,7 +13,7 @@ type PingPongController struct {
 }
 
 // StartPing ...
-func (ctrl *PingPongController) StartPing(ctx context.Context, req *api_1.PingPong) (*api_1.PingPong, error) {
+func (ctrl *PingPongController) StartPing(ctx context.Context, req *apiV1.PingPong) (*apiV1.PingPong, error) {
 	if err := ctrl.Validator.Validate(req); err != nil {
 		return nil, err
 	}

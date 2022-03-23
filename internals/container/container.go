@@ -2,7 +2,6 @@ package container
 
 import (
 	"fmt"
-	"git.robodev.co/imp/shared-utility/validator"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/config"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller"
@@ -20,6 +19,7 @@ import (
 	warehouseService "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/service/warehouse"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/utils"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/utils/logrus"
+	"github.com/robowealth-mutual-fund/shared-utility/validator"
 	log "github.com/sirupsen/logrus"
 	"go.uber.org/dig"
 	"net/http"

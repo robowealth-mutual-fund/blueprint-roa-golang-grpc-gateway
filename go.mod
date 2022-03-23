@@ -3,7 +3,6 @@ module github.com/robowealth-mutual-fund/blueprint-roa-golang
 go 1.17
 
 require (
-	git.robodev.co/imp/shared-utility v0.0.19
 	github.com/caarlos0/env/v6 v6.2.2
 	github.com/go-playground/locales v0.13.0
 	github.com/go-playground/universal-translator v0.17.0
@@ -11,6 +10,7 @@ require (
 	github.com/golang/protobuf v1.5.2
 	github.com/grpc-ecosystem/grpc-gateway v1.16.0
 	github.com/opentracing/opentracing-go v1.2.0
+	github.com/robowealth-mutual-fund/shared-utility v1.0.2
 	github.com/sirupsen/logrus v1.4.2
 	github.com/stretchr/testify v1.7.0
 	github.com/uber/jaeger-client-go v2.30.0+incompatible
