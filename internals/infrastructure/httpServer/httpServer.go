@@ -1,7 +1,7 @@
 package httpServer
 
 import (
-	"log"
+	log "github.com/sirupsen/logrus"
 	"net/http"
 	"os"
 	"os/signal"
@@ -19,6 +19,6 @@ func (s *Server) Start() error {
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt)
 
-	log.Println("starting HTTP/REST gateway..." + strconv.Itoa(s.Config.HttpPort))
+	log.Info("Listening and serving HTTP on " + strconv.Itoa(s.Config.HttpPort))
 	return srv.ListenAndServe()
 }

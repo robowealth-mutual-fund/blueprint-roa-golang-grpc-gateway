@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
-	"log"
+	log "github.com/sirupsen/logrus"
 	"time"
 
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/config"
@@ -15,8 +15,6 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
-
-// this file should be a connect Database only
 
 // DB is struct of this file.
 type DB struct {
@@ -34,23 +32,23 @@ func (db *DB) Close() {
 	if err := db.sql.Close(); err != nil {
 		fmt.Printf("Error closing db connection %s", err)
 	} else {
-		fmt.Println("DB connection closed")
+		log.Info("DB connection closed")
 	}
 }
 
 func (db *DB) MigrateDB() {
-	fmt.Println("Start migrate db READ")
+	log.Info("Start migrate db READ")
 
 	if !db.Connection.Migrator().HasTable(entity.Product{}.TableName()) {
 		err := db.Connection.AutoMigrate(&entity.Product{})
 
-		log.Println("Error :", err)
+		log.Error("Error :", err)
 	}
 }
 
 // NewServerBase is start connection database.
 func NewServerBase(env config.Configuration) *DB {
-	log.Println("start NewserverBase")
+	log.Info("start New serverBase")
 
 	dsn := fmt.Sprintf(
 		"host=%s port=%s user=%s dbname=%s password=%s sslmode=disable",

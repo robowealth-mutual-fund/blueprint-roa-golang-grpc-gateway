@@ -3,26 +3,23 @@ package jaeger
 import (
 	"github.com/opentracing/opentracing-go"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/config"
+	log "github.com/sirupsen/logrus"
 	jaegerConf "github.com/uber/jaeger-client-go/config"
 	jaegerLog "github.com/uber/jaeger-client-go/log"
 	"github.com/uber/jaeger-client-go/rpcmetrics"
 	"github.com/uber/jaeger-lib/metrics"
 	"io"
-	"log"
 )
 
 func NewJaeger(appConfig config.Configuration) io.Closer {
-	log.Println()
 	cfg, err := jaegerConf.FromEnv()
-	log.Println("ERROR", err)
 	panicIfErr(err)
-	log.Println("IN JAGER")
 	cfg.ServiceName = appConfig.AppName + "-" + appConfig.Env
 	cfg.Sampler.Type = "const"
 	cfg.Sampler.Param = 1
 	cfg.Reporter = &jaegerConf.ReporterConfig{
 		LogSpans:           true,
-		LocalAgentHostPort: appConfig.JaegerAgentHost + ":" + appConfig.JaegerAgentPort,
+		LocalAgentHostPort: appConfig.Jaeger.JaegerAgentHost + ":" + appConfig.Jaeger.JaegerAgentPort,
 	}
 
 	jLogger := jaegerLog.StdLogger
