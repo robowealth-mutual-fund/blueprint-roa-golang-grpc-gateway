@@ -1,8 +1,6 @@
 package grpcserver
 
 import (
-	grpcErrors "git.robodev.co/imp/shared-utility/grpc_errors"
-	validatorUtils "git.robodev.co/imp/shared-utility/validator"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/config"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller"
 	controllerCategory "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/category"
@@ -10,6 +8,8 @@ import (
 	controllerWarehouse "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/warehouse"
 	apiV1 "github.com/robowealth-mutual-fund/blueprint-roa-golang/pkg/api/v1"
 	grpcHealthV1 "github.com/robowealth-mutual-fund/blueprint-roa-golang/pkg/grpc/health/v1"
+	grpcErrors "github.com/robowealth-mutual-fund/shared-utility/grpc_errors"
+	validatorUtils "github.com/robowealth-mutual-fund/shared-utility/validator"
 	"google.golang.org/grpc"
 )
 
