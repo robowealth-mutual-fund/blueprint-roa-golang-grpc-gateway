@@ -21,8 +21,9 @@ func (c *Controller) Create(ctx context.Context, request *apiV1.CreateRequest) (
 		Detail: request.GetDetail(),
 		Price:  request.GetPrice(),
 	})
-
+	
 	if err != nil {
+		span.LogKV("Handler ERROR :", err)
 		return nil, err
 	}
 	return &apiV1.CreateResponse{Id: int32(id)}, nil

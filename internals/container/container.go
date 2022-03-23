@@ -11,11 +11,12 @@ import (
 	grpcServer "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/infrastructure/grpcServer"
 	httpServer "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/infrastructure/httpServer"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/infrastructure/jaeger"
-	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/infrastructure/logrus"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/repository/postgres"
 	serviceProduct "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/service/product"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/service/product/wrapper"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/utils"
+	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/utils/logrus"
+	log "github.com/sirupsen/logrus"
 	"go.uber.org/dig"
 	"net/http"
 )
@@ -54,12 +55,12 @@ func (c *Container) Configure() error {
 	}
 	appConfig := config.NewConfiguration()
 	jaeger.NewJaeger(appConfig)
+	logrus.NewLog()
 	return nil
 }
 
 func (c *Container) Start() error {
-	fmt.Println("Start Container")
-
+	log.Info("Start Container")
 	if err := c.container.Invoke(func(s *grpcServer.Server, h *httpServer.Server, v *validator.CustomValidator) {
 		go func() {
 			_ = h.Start()
@@ -77,7 +78,7 @@ func (c *Container) Start() error {
 
 //MigrateDB ...
 func (c *Container) MigrateDB() error {
-	fmt.Println("Start Container DB")
+	log.Info("Start Container DB")
 
 	if err := c.container.Invoke(func(d *database.DB) {
 		d.MigrateDB()

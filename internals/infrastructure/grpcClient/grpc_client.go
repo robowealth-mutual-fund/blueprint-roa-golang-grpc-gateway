@@ -1,10 +1,10 @@
 package grpcclient
 
 import (
-	"log"
+	log "github.com/sirupsen/logrus"
 
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/config"
-	api_v1 "github.com/robowealth-mutual-fund/blueprint-roa-golang/pkg/api/v1"
+	apiV1 "github.com/robowealth-mutual-fund/blueprint-roa-golang/pkg/api/v1"
 
 	"google.golang.org/grpc"
 )
@@ -12,7 +12,7 @@ import (
 // HTTPGRPCClient ...
 type HTTPGRPCClient struct {
 	Config   config.Configuration
-	PingPong api_v1.PingPongServiceClient
+	PingPong apiV1.PingPongServiceClient
 }
 
 // Connect ...
@@ -21,12 +21,12 @@ func (client *HTTPGRPCClient) Connect() {
 	conn, err := grpc.Dial("0.0.0.0:3000", grpc.WithInsecure())
 
 	if err != nil {
-		log.Fatalf("did not connect: %v", err)
+		log.Error("did not connect: %v", err)
 	}
 
-	log.Println("Connect to service on", "0.0.0.0:3000")
+	log.Info("Connect to service on", "0.0.0.0:3000")
 
-	client.PingPong = api_v1.NewPingPongServiceClient(conn)
+	client.PingPong = apiV1.NewPingPongServiceClient(conn)
 }
 
 // NewHTTPGRPCClient ...

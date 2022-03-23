@@ -1,7 +1,7 @@
 package grpcserver
 
 import (
-	"fmt"
+	log "github.com/sirupsen/logrus"
 	"net"
 	"os"
 	"os/signal"
@@ -25,7 +25,7 @@ func (s *Server) Start() {
 		}
 	}()
 
-	fmt.Println("Listening and serving HTTP on", strconv.Itoa(s.Config.Port))
+	log.Info("Listening and serving GRPC on ", strconv.Itoa(s.Config.Port))
 
 	// Gracefully Shutdown
 	// Make channel listen for signals from OS
@@ -40,7 +40,7 @@ func (s *Server) Start() {
 // Stop GracefulStop GRPC
 func (s *Server) Stop() {
 	s.Server.GracefulStop()
-	fmt.Println("Server gracefully stopped")
+	log.Info("Server gracefully stopped")
 }
 
 // NewServer ...
