@@ -19,6 +19,45 @@
     "application/json"
   ],
   "paths": {
+    "/api/v1/category": {
+      "post": {
+        "operationId": "CategoryService_Create",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/api_v1CategoryCreateResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/api_v1CategoryCreateRequest"
+            }
+          }
+        ],
+        "tags": [
+          "CategoryService"
+        ]
+      }
+    },
     "/api/v1/product": {
       "post": {
         "operationId": "ProductService_Create",
@@ -57,9 +96,70 @@
           "ProductService"
         ]
       }
+    },
+    "/api/v1/warehouse": {
+      "post": {
+        "operationId": "WarehouseService_Create",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/api_v1WarehouseCreateResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/api_v1WarehouseCreateRequest"
+            }
+          }
+        ],
+        "tags": [
+          "WarehouseService"
+        ]
+      }
     }
   },
   "definitions": {
+    "api_v1CategoryCreateRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "@inject_tag: validate:\"required\""
+        },
+        "detail": {
+          "type": "string",
+          "title": "@inject_tag: validate:\"required\""
+        }
+      }
+    },
+    "api_v1CategoryCreateResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
     "api_v1CreateRequest": {
       "type": "object",
       "properties": {
@@ -82,6 +182,28 @@
       }
     },
     "api_v1CreateResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "api_v1WarehouseCreateRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "@inject_tag: validate:\"required\""
+        },
+        "detail": {
+          "type": "string",
+          "title": "@inject_tag: validate:\"required\""
+        }
+      }
+    },
+    "api_v1WarehouseCreateResponse": {
       "type": "object",
       "properties": {
         "id": {

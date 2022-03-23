@@ -17,9 +17,14 @@ watch:
 pbgen:
 	protoc --proto_path=internals/api/v1 --go_out=plugins=grpc:pkg/grpc/health/v1 health.proto
 	protoc --proto_path=internals/api/v1 --go_out=plugins=grpc:pkg/api/v1 ping_pong.proto
-	protoc --proto_path=internals/api/v1 --proto_path=thirdparty --go_out=plugins=grpc:pkg/api/v1 --grpc-gateway_out=logtostderr=true:pkg/api/v1 --swagger_out=logtostderr=true:swagger product.proto
+	protoc --proto_path=internals/api/v1 --proto_path=thirdparty --go_out=plugins=grpc:pkg/api/v1 --grpc-gateway_out=logtostderr=true:pkg/api/v1 --swagger_out=logtostderr=true,allow_merge=true,merge_file_name=api:swagger product.proto category.proto warehouse.proto
+	#protoc --proto_path=internals/api/v1 --proto_path=thirdparty --go_out=plugins=grpc:pkg/api/v1 --grpc-gateway_out=logtostderr=true:pkg/api/v1 --swagger_out=logtostderr=true:swagger category.proto
+	#protoc --proto_path=internals/api/v1 --proto_path=thirdparty --go_out=plugins=grpc:pkg/api/v1 --grpc-gateway_out=logtostderr=true:pkg/api/v1 --swagger_out=logtostderr=true:swagger warehouse.proto
+
 	protoc-go-inject-tag -input=pkg/api/v1/ping_pong.pb.go
 	protoc-go-inject-tag -input=pkg/api/v1/product.pb.go
+	protoc-go-inject-tag -input=pkg/api/v1/category.pb.go
+	protoc-go-inject-tag -input=pkg/api/v1/warehouse.pb.go
 
 .PHONY: stringer
 stringer:

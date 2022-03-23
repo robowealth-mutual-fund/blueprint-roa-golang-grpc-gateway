@@ -6,14 +6,18 @@ import (
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/config"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller"
+	controllerCategory "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/category"
 	controllerProduct "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/product"
+	warehouseController "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/warehouse"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/infrastructure/database"
 	grpcServer "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/infrastructure/grpcServer"
 	httpServer "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/infrastructure/httpServer"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/infrastructure/jaeger"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/repository/postgres"
+	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/service/category"
 	serviceProduct "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/service/product"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/service/product/wrapper"
+	warehouseService "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/service/warehouse"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/utils"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/utils/logrus"
 	log "github.com/sirupsen/logrus"
@@ -46,8 +50,11 @@ func (c *Container) Configure() error {
 		postgres.NewRepository,
 		utils.NewUtils,
 		utils.NewCustomValidator,
+		category.NewService,
+		warehouseService.NewService,
+		controllerCategory.NewController,
+		warehouseController.NewController,
 	}
-
 	for _, service := range servicesConstructors {
 		if err := c.container.Provide(service); err != nil {
 			return err
