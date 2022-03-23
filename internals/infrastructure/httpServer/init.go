@@ -13,21 +13,25 @@ import (
 )
 
 type Server struct {
-	Config       config.Configuration
-	Server       *runtime.ServeMux
-	HttpMux      *http.ServeMux
-	ProductCtrl  *controllerProduct.Controller
-	CategoryCtrl *controllerCategory.Controller
+	Config        config.Configuration
+	Server        *runtime.ServeMux
+	HttpMux       *http.ServeMux
+	ProductCtrl   *controllerProduct.Controller
+	CategoryCtrl  *controllerCategory.Controller
+	WarehouseCtrl *controllerCategory.Controller
 }
 
 func (s *Server) Configure(ctx context.Context, opts []grpc.DialOption) {
 	apiV1.RegisterProductServiceHandlerFromEndpoint(ctx, s.Server, "0.0.0.0:"+strconv.Itoa(s.Config.Port), opts)
 	apiV1.RegisterCategoryServiceHandlerFromEndpoint(ctx, s.Server, "0.0.0.0:"+strconv.Itoa(s.Config.Port), opts)
+	apiV1.RegisterWarehouseServiceHandlerFromEndpoint(ctx, s.Server, "0.0.0.0:"+strconv.Itoa(s.Config.Port), opts)
+
 }
 
 func NewServer(config config.Configuration, rmux *runtime.ServeMux, httpMux *http.ServeMux,
 	productCtrl *controllerProduct.Controller,
 	categoryCtrl *controllerCategory.Controller,
+	warehouseCtrl *controllerCategory.Controller,
 ) *Server {
 	opts := []grpc.DialOption{grpc.WithInsecure()}
 	s := &Server{

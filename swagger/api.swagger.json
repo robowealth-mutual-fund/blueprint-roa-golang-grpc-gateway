@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Category Service",
+    "title": "Product Service",
     "version": "1.0",
     "contact": {
       "name": "blueprint-roa-golang-grpc-gateway",
@@ -57,6 +57,84 @@
           "CategoryService"
         ]
       }
+    },
+    "/api/v1/product": {
+      "post": {
+        "operationId": "ProductService_Create",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/api_v1CreateResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/api_v1CreateRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ProductService"
+        ]
+      }
+    },
+    "/api/v1/warehouse": {
+      "post": {
+        "operationId": "WarehouseService_Create",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/api_v1WarehouseCreateResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/api_v1WarehouseCreateRequest"
+            }
+          }
+        ],
+        "tags": [
+          "WarehouseService"
+        ]
+      }
     }
   },
   "definitions": {
@@ -74,6 +152,58 @@
       }
     },
     "api_v1CategoryCreateResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "api_v1CreateRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "@inject_tag: validate:\"required\""
+        },
+        "detail": {
+          "type": "string",
+          "title": "@inject_tag: validate:\"required\""
+        },
+        "brand": {
+          "type": "string",
+          "title": "@inject_tag: validate:\"required\""
+        },
+        "price": {
+          "type": "string",
+          "title": "@inject_tag: validate:\"required\""
+        }
+      }
+    },
+    "api_v1CreateResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "api_v1WarehouseCreateRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "@inject_tag: validate:\"required\""
+        },
+        "detail": {
+          "type": "string",
+          "title": "@inject_tag: validate:\"required\""
+        }
+      }
+    },
+    "api_v1WarehouseCreateResponse": {
       "type": "object",
       "properties": {
         "id": {

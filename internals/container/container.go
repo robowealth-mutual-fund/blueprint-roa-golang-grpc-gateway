@@ -8,6 +8,7 @@ import (
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller"
 	controllerCategory "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/category"
 	controllerProduct "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/product"
+	warehouseController "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/warehouse"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/infrastructure/database"
 	grpcServer "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/infrastructure/grpcServer"
 	httpServer "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/infrastructure/httpServer"
@@ -17,6 +18,7 @@ import (
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/service/category"
 	serviceProduct "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/service/product"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/service/product/wrapper"
+	warehouseService "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/service/warehouse"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/utils"
 	"go.uber.org/dig"
 	"net/http"
@@ -48,7 +50,9 @@ func (c *Container) Configure() error {
 		utils.NewUtils,
 		utils.NewCustomValidator,
 		category.NewService,
+		warehouseService.NewService,
 		controllerCategory.NewController,
+		warehouseController.NewController,
 	}
 	for _, service := range servicesConstructors {
 		if err := c.container.Provide(service); err != nil {
