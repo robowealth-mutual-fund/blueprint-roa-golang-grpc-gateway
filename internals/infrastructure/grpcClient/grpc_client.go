@@ -31,7 +31,6 @@ func (client *HTTPGRPCClient) Connect() {
 
 // NewHTTPGRPCClient ...
 func NewHTTPGRPCClient(config config.Configuration) *HTTPGRPCClient {
-	// fmt.Printf("new grpc client: %+v\n", config)
 	grpcClient := HTTPGRPCClient{
 		Config: config,
 	}

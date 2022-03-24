@@ -17,16 +17,15 @@ func (s *Server) Start() {
 		listen, err := net.Listen("tcp", ":"+strconv.Itoa(s.Config.Port))
 
 		if err != nil {
-			panic(err)
+			log.Panic(err)
 		}
 
 		if err := s.Server.Serve(listen); err != nil {
-			panic(err)
+			log.Panic(err)
 		}
 	}()
 
 	log.Info("Listening and serving GRPC on ", strconv.Itoa(s.Config.Port))
-
 	// Gracefully Shutdown
 	// Make channel listen for signals from OS
 	gracefulStop := make(chan os.Signal, 1)

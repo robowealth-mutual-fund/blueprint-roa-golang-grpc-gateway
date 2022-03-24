@@ -30,7 +30,7 @@ func (db *DB) IsErrorRecordNotFound(err error) bool {
 // Close Connection DB
 func (db *DB) Close() {
 	if err := db.sql.Close(); err != nil {
-		fmt.Printf("Error closing db connection %s", err)
+		log.Errorf("Error closing db connection %s", err)
 	} else {
 		log.Info("DB connection closed")
 	}
@@ -74,12 +74,12 @@ func NewServerBase(env config.Configuration) *DB {
 	})
 
 	if err != nil {
-		panic(err)
+		log.Panic(err)
 	}
 
 	sqlDB, err := db.DB()
 	if err != nil {
-		panic(err)
+		log.Panic(err)
 	}
 
 	if env.Env != "production" {
