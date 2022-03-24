@@ -19,8 +19,8 @@ RUN apk update && apk add --no-cache git make gcc libc-dev protobuf-dev protoc g
 RUN go install github.com/favadi/protoc-go-inject-tag@v1.3.0
 RUN go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2.0
 RUN go install github.com/golang/protobuf/protoc-gen-go@v1.5.2
-RUN go install github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway@v1.16.0
-RUN go install github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger@v1.16.0
+RUN go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@latest
+RUN go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
 
 RUN git config \
 --global \

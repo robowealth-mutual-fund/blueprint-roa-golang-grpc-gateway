@@ -2,19 +2,21 @@ package controller
 
 import (
 	"context"
-
-	grpc_v1 "github.com/robowealth-mutual-fund/blueprint-roa-golang/pkg/grpc/health/v1"
+	grpcHealthV1 "google.golang.org/grpc/health/grpc_health_v1"
 )
 
 // HealthZController ...
 type HealthZController struct{}
 
-// Check ...
-func (*HealthZController) Check(ctx context.Context, req *grpc_v1.HealthCheckRequest) (*grpc_v1.HealthCheckResponse, error) {
-	return &grpc_v1.HealthCheckResponse{
-		Status: grpc_v1.HealthCheckResponse_SERVING,
-	}, nil
+func (c *HealthZController) Check(ctx context.Context, request *grpcHealthV1.HealthCheckRequest) (*grpcHealthV1.HealthCheckResponse, error) {
+	panic("implement me")
 }
+
+func (c *HealthZController) Watch(request *grpcHealthV1.HealthCheckRequest, server grpcHealthV1.Health_WatchServer) error {
+	panic("implement me")
+}
+
+// Check ...
 
 // NewHealthZController ...
 func NewHealthZController() *HealthZController {

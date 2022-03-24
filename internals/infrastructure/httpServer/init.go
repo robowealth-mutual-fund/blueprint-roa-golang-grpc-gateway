@@ -2,7 +2,7 @@ package httpServer
 
 import (
 	"context"
-	"github.com/grpc-ecosystem/grpc-gateway/runtime"
+	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/config"
 	controllerCategory "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/category"
 	controllerProduct "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/product"
@@ -35,11 +35,12 @@ func NewServer(config config.Configuration, rmux *runtime.ServeMux, httpMux *htt
 ) *Server {
 	opts := []grpc.DialOption{grpc.WithInsecure()}
 	s := &Server{
-		Config:       config,
-		Server:       rmux,
-		HttpMux:      httpMux,
-		ProductCtrl:  productCtrl,
-		CategoryCtrl: categoryCtrl,
+		Config:        config,
+		Server:        rmux,
+		HttpMux:       httpMux,
+		ProductCtrl:   productCtrl,
+		CategoryCtrl:  categoryCtrl,
+		WarehouseCtrl: warehouseCtrl,
 	}
 	s.Configure(context.Background(), opts)
 	return s

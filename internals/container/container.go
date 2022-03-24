@@ -1,7 +1,7 @@
 package container
 
 import (
-	"github.com/grpc-ecosystem/grpc-gateway/runtime"
+	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/config"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller"
 	controllerCategory "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/category"
