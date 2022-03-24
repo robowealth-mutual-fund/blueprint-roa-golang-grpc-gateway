@@ -1,7 +1,6 @@
 package container
 
 import (
-	"fmt"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/config"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller"
@@ -75,7 +74,7 @@ func (c *Container) Start() error {
 		s.Start()
 
 	}); err != nil {
-		fmt.Printf("%s", err)
+		log.Errorf("%s", err)
 
 		return err
 	}
