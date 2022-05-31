@@ -1,8 +1,9 @@
 package wrapper
 
 import (
-	service "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/service/product"
 	"go.uber.org/dig"
+
+	service "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/service/product"
 )
 
 type Wrapper struct {
@@ -10,7 +11,7 @@ type Wrapper struct {
 	Service service.Service
 }
 
-func WrapProduct(service service.Service) service.Service {
+func _(service service.Service) service.Service {
 	return &Wrapper{
 		Service: service,
 	}

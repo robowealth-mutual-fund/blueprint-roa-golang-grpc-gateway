@@ -1,7 +1,13 @@
 package container
 
 import (
+	"net/http"
+
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
+	"github.com/robowealth-mutual-fund/shared-utility/validator"
+	log "github.com/sirupsen/logrus"
+	"go.uber.org/dig"
+
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/config"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller"
 	controllerCategory "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/category"
@@ -14,14 +20,9 @@ import (
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/repository/postgres"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/service/category"
 	serviceProduct "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/service/product"
-	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/service/product/wrapper"
 	warehouseService "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/service/warehouse"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/utils"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/utils/logrus"
-	"github.com/robowealth-mutual-fund/shared-utility/validator"
-	log "github.com/sirupsen/logrus"
-	"go.uber.org/dig"
-	"net/http"
 )
 
 type Container struct {
@@ -29,9 +30,7 @@ type Container struct {
 }
 
 func (c *Container) Configure() error {
-	if err := c.container.Provide(wrapper.WrapProduct, dig.Name("wrapperProduct")); err != nil {
-		return err
-	}
+
 	servicesConstructors := []interface{}{
 		config.NewConfiguration,
 		grpcServer.NewServer,
