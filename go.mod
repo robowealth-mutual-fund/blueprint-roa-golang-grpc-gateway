@@ -1,6 +1,6 @@
 module github.com/robowealth-mutual-fund/blueprint-roa-golang
 
-go 1.17
+go 1.18
 
 require (
 	github.com/caarlos0/env/v6 v6.2.2

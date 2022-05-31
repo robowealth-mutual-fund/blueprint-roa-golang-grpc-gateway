@@ -1,5 +1,5 @@
 # Start from golang base image
-FROM golang:1.17.3-alpine3.13 as dependencies
+FROM golang:1.18.2-alpine3.15 as dependencies
 
 ENV GO11MODULE=on
 ENV GOPROXY="https://goproxy.io,direct"
