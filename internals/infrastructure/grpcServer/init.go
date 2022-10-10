@@ -5,6 +5,7 @@ import (
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller"
 	controllerCategory "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/category"
 	controllerProduct "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/product"
+	controllerUsers "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/users"
 	controllerWarehouse "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/warehouse"
 	apiV1 "github.com/robowealth-mutual-fund/blueprint-roa-golang/pkg/api/v1"
 	grpcErrors "github.com/robowealth-mutual-fund/shared-utility/grpc_errors"
@@ -21,6 +22,7 @@ type Server struct {
 	ProductCtrl   *controllerProduct.Controller
 	CategoryCtrl  *controllerCategory.Controller
 	WarehouseCtrl *controllerWarehouse.Controller
+	UsersCtrl     *controllerUsers.Controller
 }
 
 // Configure ...
@@ -30,6 +32,7 @@ func (s *Server) Configure() {
 	apiV1.RegisterProductServiceServer(s.Server, s.ProductCtrl)
 	apiV1.RegisterCategoryServiceServer(s.Server, s.CategoryCtrl)
 	apiV1.RegisterWarehouseServiceServer(s.Server, s.WarehouseCtrl)
+	apiV1.RegisterUsersServiceServer(s.Server, s.UsersCtrl)
 }
 
 func NewServer(
@@ -39,6 +42,7 @@ func NewServer(
 	productCtrl *controllerProduct.Controller,
 	categoryCtrl *controllerCategory.Controller,
 	warehouseCtrl *controllerWarehouse.Controller,
+	usersCtrl *controllerUsers.Controller,
 	validator *validatorUtils.CustomValidator,
 ) *Server {
 	option := grpc.ChainUnaryInterceptor(
@@ -54,6 +58,7 @@ func NewServer(
 		ProductCtrl:   productCtrl,
 		CategoryCtrl:  categoryCtrl,
 		WarehouseCtrl: warehouseCtrl,
+		UsersCtrl:     usersCtrl,
 	}
 
 	s.Configure()
