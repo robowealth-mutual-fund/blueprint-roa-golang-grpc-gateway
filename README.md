@@ -1,6 +1,6 @@
 # BluePrint ROA Golang Grpc Gateway
 
-# Soft Requirement
+# Software Requirement
 
 - protobuf
 - grpc
