@@ -4,6 +4,8 @@ import (
 	"net/http"
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
+	controllerUsers "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/users"
+	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/service/users"
 	"github.com/robowealth-mutual-fund/shared-utility/validator"
 	log "github.com/sirupsen/logrus"
 	"go.uber.org/dig"
@@ -50,6 +52,8 @@ func (c *Container) Configure() error {
 		utils.NewCustomValidator,
 		category.NewService,
 		warehouseService.NewService,
+		users.NewService,
+		controllerUsers.NewController,
 		controllerCategory.NewController,
 		warehouseController.NewController,
 	}

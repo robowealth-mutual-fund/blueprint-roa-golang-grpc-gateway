@@ -18,6 +18,9 @@
     },
     {
       "name": "WarehouseService"
+    },
+    {
+      "name": "UsersService"
     }
   ],
   "schemes": [
@@ -108,6 +111,45 @@
         ]
       }
     },
+    "/api/v1/users": {
+      "post": {
+        "operationId": "UsersService_Create",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/api_v1UsersCreateResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/api_v1UsersCreateRequest"
+            }
+          }
+        ],
+        "tags": [
+          "UsersService"
+        ]
+      }
+    },
     "/api/v1/warehouse": {
       "post": {
         "operationId": "WarehouseService_Create",
@@ -193,6 +235,39 @@
       }
     },
     "api_v1CreateResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "api_v1UsersCreateRequest": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string",
+          "title": "@inject_tag: validate:\"required\""
+        },
+        "lastName": {
+          "type": "string",
+          "title": "@inject_tag: validate:\"required\""
+        },
+        "address": {
+          "type": "string"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "title": "@inject_tag: validate:\"required\""
+        },
+        "gender": {
+          "type": "string",
+          "title": "@inject_tag: validate:\"required\""
+        }
+      }
+    },
+    "api_v1UsersCreateResponse": {
       "type": "object",
       "properties": {
         "id": {

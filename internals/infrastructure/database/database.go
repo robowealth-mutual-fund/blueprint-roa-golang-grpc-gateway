@@ -4,8 +4,9 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
-	log "github.com/sirupsen/logrus"
 	"time"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/config"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/entity"
@@ -44,13 +45,18 @@ func (db *DB) MigrateDB() {
 
 		log.Error("Error :", err)
 	}
-	if !db.Connection.Migrator().HasTable(entity.Category{}.TableName()) {
-		err := db.Connection.AutoMigrate(&entity.Category{})
+	if !db.Connection.Migrator().HasTable(entity.Users{}.TableName()) {
+		err := db.Connection.AutoMigrate(&entity.Users{})
 
 		log.Println("Error :", err)
 	}
 	if !db.Connection.Migrator().HasTable(entity.Warehouse{}.TableName()) {
 		err := db.Connection.AutoMigrate(&entity.Warehouse{})
+
+		log.Println("Error :", err)
+	}
+	if !db.Connection.Migrator().HasTable(entity.Category{}.TableName()) {
+		err := db.Connection.AutoMigrate(&entity.Category{})
 
 		log.Println("Error :", err)
 	}
