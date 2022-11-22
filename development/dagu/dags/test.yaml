@@ -1,0 +1,25 @@
+steps:
+  - name: send POST request
+    executor: http
+    command: 'POST https://reqres.in/api/register'
+    script: |
+      {
+        "timeout": 60000,
+        "headers": {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        "body": "{\"email\": \"eve.holt@reqres.in\",\"password\": \"pistol\"}"
+      }
+    output: RESULT
+  - name: step 2 convert
+    command: "sh"
+    script: |
+      echo $RESULT | awk '{print $1}'
+    output: arr
+    depends:
+      - send POST request
+  - name: step 3 RESULT
+    command: echo ${arr}
+    depends:
+      - step 2 convert

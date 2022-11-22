@@ -1,0 +1,5 @@
+`{"Age":18,"Name":"oscar","Verified":"false"}`
+json: cannot unmarshal string into Go struct field Demo.Verified of type bool
+Age :  18
+Name :  oscar
+Verified :  false

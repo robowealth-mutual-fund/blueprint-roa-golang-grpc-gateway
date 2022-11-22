@@ -1,0 +1,8 @@
+steps:
+  - name: step1
+    command: /home/dagu/process/demo
+    output: RESULT
+  - name: step2
+    command: /home/dagu/process/demo_step_two '${RESULT}'
+    depends:
+      - step1

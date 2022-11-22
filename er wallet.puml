@@ -1,0 +1,31 @@
+@startuml
+entity Operators {
+  * id : uuid
+  --
+  * name : string
+  * customer_id : uuid
+  mobile_number : string
+  client_id : string
+  client_secret : string
+}
+
+entity Wallets {
+  * id : uuid
+  --
+  * operator : uuid
+  * account_id : uuid
+  * client_wallet_id : string
+  outstanding_balance : float
+  available_balance : float
+}
+
+entity Transactions {
+  * id : uuid
+  --
+  * wallet_id : uuid
+  * payer : string
+  * payee : string
+  * kind : string
+  * amount : float
+}
+@enduml

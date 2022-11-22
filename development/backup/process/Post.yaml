@@ -1,0 +1,41 @@
+steps:
+  - name: send POST request
+    executor: http
+    command: 'POST https://reqres.in/api/register'
+    script: |
+      {
+        "timeout": 60000,
+        "headers": {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        "body": "{\"email\": \"eve.holt@reqres.in\",\"password\": \"pistol\"}"
+      }
+    output: RESULT
+  - name: step 2 convert
+    executor:
+      type: docker
+      config:
+        image: 'bash:latest'
+        container:
+          env:
+            - RESPONSE=$RESULT
+        autoRemove: true
+    command: bash
+    script: >
+      echo "after fuck"
+
+      echo ${RESPONSE}
+
+      while IFS=' ' read -r line; do arr=$line;break; done <<< $(echo $RESPONSE)
+
+      echo $arr
+
+      echo "end fuck"
+    output: arr
+    depends:
+      - send POST request
+  - name: step 3 RESULT
+    command: 'echo ${arr}'
+    depends:
+      - step 2 convert

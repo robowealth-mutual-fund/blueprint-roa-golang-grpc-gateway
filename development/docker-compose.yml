@@ -6,7 +6,16 @@ services:
       - "27017:27017"
     volumes:
       - mongo_service_volume:/data/db
-
+  dagu:
+    image: yohamta/dagu:latest
+    restart: always
+    ports:
+      - "3080:8080"
+    volumes:
+      - ./dagu/dags:/home/dagu/.dagu/dags
+      - ./dagu/data:/home/dagu/.dagu/data
+      - ./dagu/logs:/home/dagu/.dagu/logs
+      - ./dagu/process:/home/dagu/process
   postgres:
     image: postgis/postgis
     restart: always
