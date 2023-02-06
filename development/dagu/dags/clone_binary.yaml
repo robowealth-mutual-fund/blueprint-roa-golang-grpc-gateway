@@ -1,0 +1,6 @@
+steps:
+  - name: clone git
+    command: sh
+    script: |
+      cd /home/dagu/process/git
+      git clone https://dagu:glpat-PuQy32AhwQFVPnZWiJyW@git.robodev.co/poc/dagu-process.git .

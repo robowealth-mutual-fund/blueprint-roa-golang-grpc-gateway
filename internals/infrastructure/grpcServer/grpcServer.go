@@ -1,12 +1,13 @@
 package grpcserver
 
 import (
-	log "github.com/sirupsen/logrus"
 	"net"
 	"os"
 	"os/signal"
 	"strconv"
 	"syscall"
+
+	log "github.com/sirupsen/logrus"
 )
 
 // Server ...
@@ -34,6 +35,8 @@ func (s *Server) Start() {
 	signal.Notify(gracefulStop, syscall.SIGINT)
 
 	<-gracefulStop
+	s.Stop()
+	s.db.Close()
 }
 
 // Stop GracefulStop GRPC
