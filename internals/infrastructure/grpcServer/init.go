@@ -7,6 +7,7 @@ import (
 	controllerProduct "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/product"
 	controllerUsers "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/users"
 	controllerWarehouse "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/warehouse"
+	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/infrastructure/database"
 	apiV1 "github.com/robowealth-mutual-fund/blueprint-roa-golang/pkg/api/v1"
 	grpcErrors "github.com/robowealth-mutual-fund/shared-utility/grpc_errors"
 	validatorUtils "github.com/robowealth-mutual-fund/shared-utility/validator"
@@ -23,6 +24,7 @@ type Server struct {
 	CategoryCtrl  *controllerCategory.Controller
 	WarehouseCtrl *controllerWarehouse.Controller
 	UsersCtrl     *controllerUsers.Controller
+	db            *database.DB
 }
 
 // Configure ...
@@ -44,6 +46,7 @@ func NewServer(
 	warehouseCtrl *controllerWarehouse.Controller,
 	usersCtrl *controllerUsers.Controller,
 	validator *validatorUtils.CustomValidator,
+	db *database.DB,
 ) *Server {
 	option := grpc.ChainUnaryInterceptor(
 		grpcErrors.UnaryServerInterceptor(),
@@ -59,6 +62,7 @@ func NewServer(
 		CategoryCtrl:  categoryCtrl,
 		WarehouseCtrl: warehouseCtrl,
 		UsersCtrl:     usersCtrl,
+		db:            db,
 	}
 
 	s.Configure()
