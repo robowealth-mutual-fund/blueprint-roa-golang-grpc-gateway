@@ -1,0 +1,5 @@
+bin
+.env
+.idea
+*.pb.go
+.vscode

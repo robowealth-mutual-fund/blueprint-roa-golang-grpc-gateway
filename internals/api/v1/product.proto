@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package api_v1;
+
+option go_package = "/.;api_v1";
+
+
+message Product {
+  string name = 1;
+  string detail = 2;
+  string brand = 3;
+  string price = 4;
+  int64 created_at = 6;
+  int64 updated_at = 7;
+  string created_by = 8;
+  string updated_by = 9;
+}
+
+message CreateRequest {
+  // @inject_tag: validate:"required"
+  string name = 1;
+  // @inject_tag: validate:"required"
+  string detail = 2;
+  // @inject_tag: validate:"required"
+  string brand = 3;
+  // @inject_tag: validate:"required"
+  string price = 4;
+}
+
+message CreateResponse{
+  int32 id = 1;
+}
+
+
+service ProductService {
+  rpc Create(CreateRequest) returns (CreateResponse);
+}
