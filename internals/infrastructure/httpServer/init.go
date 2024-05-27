@@ -7,6 +7,7 @@ import (
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/config"
+	controllerCart "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/cart"
 	controllerCategory "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/category"
 	controllerProduct "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/product"
 	controllerUsers "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/users"
@@ -20,6 +21,7 @@ type Server struct {
 	Server        *runtime.ServeMux
 	HttpMux       *http.ServeMux
 	ProductCtrl   *controllerProduct.Controller
+	CartCtrl      *controllerCart.Controller
 	CategoryCtrl  *controllerCategory.Controller
 	WarehouseCtrl *controllerWarehouse.Controller
 	UsersCtrl     *controllerUsers.Controller
@@ -30,6 +32,7 @@ func (s *Server) Configure(ctx context.Context, opts []grpc.DialOption) {
 	apiV1.RegisterCategoryServiceHandlerFromEndpoint(ctx, s.Server, "0.0.0.0:"+strconv.Itoa(s.Config.Port), opts)
 	apiV1.RegisterWarehouseServiceHandlerFromEndpoint(ctx, s.Server, "0.0.0.0:"+strconv.Itoa(s.Config.Port), opts)
 	apiV1.RegisterUsersServiceHandlerFromEndpoint(ctx, s.Server, "0.0.0.0:"+strconv.Itoa(s.Config.Port), opts)
+	apiV1.RegisterCartServiceHandlerFromEndpoint(ctx, s.Server, "0.0.0.0:"+strconv.Itoa(s.Config.Port), opts)
 
 }
 
@@ -37,6 +40,7 @@ func NewServer(config config.Configuration, rmux *runtime.ServeMux, httpMux *htt
 	productCtrl *controllerProduct.Controller,
 	categoryCtrl *controllerCategory.Controller,
 	warehouseCtrl *controllerWarehouse.Controller,
+	cartCtrl *controllerCart.Controller,
 	usersCtrl *controllerUsers.Controller,
 ) *Server {
 	opts := []grpc.DialOption{grpc.WithInsecure()}
@@ -47,6 +51,7 @@ func NewServer(config config.Configuration, rmux *runtime.ServeMux, httpMux *htt
 		ProductCtrl:   productCtrl,
 		CategoryCtrl:  categoryCtrl,
 		WarehouseCtrl: warehouseCtrl,
+		CartCtrl:      cartCtrl,
 		UsersCtrl:     usersCtrl,
 	}
 	s.Configure(context.Background(), opts)

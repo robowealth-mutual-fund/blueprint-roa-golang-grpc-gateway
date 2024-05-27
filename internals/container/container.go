@@ -12,6 +12,7 @@ import (
 
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/config"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller"
+	controllerCart "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/cart"
 	controllerCategory "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/category"
 	controllerProduct "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/product"
 	warehouseController "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/warehouse"
@@ -20,6 +21,7 @@ import (
 	httpServer "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/infrastructure/httpServer"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/infrastructure/jaeger"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/repository/postgres"
+	cartService "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/service/cart"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/service/category"
 	serviceProduct "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/service/product"
 	warehouseService "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/service/warehouse"
@@ -35,12 +37,15 @@ func (c *Container) Configure() error {
 
 	servicesConstructors := []interface{}{
 		config.NewConfiguration,
+		controllerCart.NewController,
+		cartService.NewService,
 		grpcServer.NewServer,
 		database.NewServerBase,
 		http.NewServeMux,
 		httpServer.NewServer,
 		runtime.NewServeMux,
 		jaeger.NewJaeger,
+
 		logrus.NewLog,
 		controller.NewHealthZController,
 		controller.NewPingPongController,
@@ -85,7 +90,7 @@ func (c *Container) Start() error {
 	return nil
 }
 
-//MigrateDB ...
+// MigrateDB ...
 func (c *Container) MigrateDB() error {
 	log.Info("Start Container DB")
 

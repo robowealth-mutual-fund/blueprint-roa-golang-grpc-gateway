@@ -3,6 +3,7 @@ package grpcserver
 import (
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/config"
 	"github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller"
+	controllerCart "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/cart"
 	controllerCategory "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/category"
 	controllerProduct "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/product"
 	controllerUsers "github.com/robowealth-mutual-fund/blueprint-roa-golang/internals/controller/users"
@@ -23,6 +24,7 @@ type Server struct {
 	ProductCtrl   *controllerProduct.Controller
 	CategoryCtrl  *controllerCategory.Controller
 	WarehouseCtrl *controllerWarehouse.Controller
+	CartCtrl      *controllerCart.Controller
 	UsersCtrl     *controllerUsers.Controller
 	db            *database.DB
 }
@@ -35,6 +37,7 @@ func (s *Server) Configure() {
 	apiV1.RegisterCategoryServiceServer(s.Server, s.CategoryCtrl)
 	apiV1.RegisterWarehouseServiceServer(s.Server, s.WarehouseCtrl)
 	apiV1.RegisterUsersServiceServer(s.Server, s.UsersCtrl)
+	apiV1.RegisterCartServiceServer(s.Server, s.CartCtrl)
 }
 
 func NewServer(
@@ -44,6 +47,7 @@ func NewServer(
 	productCtrl *controllerProduct.Controller,
 	categoryCtrl *controllerCategory.Controller,
 	warehouseCtrl *controllerWarehouse.Controller,
+	cartCtrl *controllerCart.Controller,
 	usersCtrl *controllerUsers.Controller,
 	validator *validatorUtils.CustomValidator,
 	db *database.DB,
@@ -61,6 +65,7 @@ func NewServer(
 		ProductCtrl:   productCtrl,
 		CategoryCtrl:  categoryCtrl,
 		WarehouseCtrl: warehouseCtrl,
+		CartCtrl:      cartCtrl,
 		UsersCtrl:     usersCtrl,
 		db:            db,
 	}

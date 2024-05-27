@@ -1,0 +1,18 @@
+*   Trying 127.0.0.1:3001...
+* Connected to localhost (127.0.0.1) port 3001 (#0)
+> POST /api/v1/cart HTTP/1.1
+> Host: localhost:3001
+> User-Agent: curl/7.79.1
+> Accept: */*
+> Content-Type: application/json
+> Content-Length: 79
+>
+* Mark bundle as not supporting multiuse
+< HTTP/1.1 200 OK
+< Content-Type: application/json
+< Grpc-Metadata-Content-Type: application/grpc
+< Date: Mon, 13 May 2024 16:01:08 GMT
+< Content-Length: 8
+<
+* Connection #0 to host localhost left intact
+{"id":4}%

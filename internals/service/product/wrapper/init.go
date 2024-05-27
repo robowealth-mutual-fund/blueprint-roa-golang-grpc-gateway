@@ -10,9 +10,3 @@ type Wrapper struct {
 	dig.In  `name:"wrapperProduct"`
 	Service service.Service
 }
-
-func _(service service.Service) service.Service {
-	return &Wrapper{
-		Service: service,
-	}
-}

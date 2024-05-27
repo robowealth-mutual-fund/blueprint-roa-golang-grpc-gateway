@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package api_v1;
+import "google/api/annotations.proto";
+import "protocGenSwagger/options/annotations.proto";
+
+option go_package = "/.;api_v1";
+
+option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
+  info: {
+    title: "Cart Service"
+    version: "1.0"
+    contact: {
+      name: "blueprint-roa-golang-grpc-gateway"
+      url: "http://localhost:3001"
+      email: "chat@robowealth.co.th"
+    }
+  }
+  schemes: HTTP
+  consumes: "application/json"
+  produces: "application/json"
+  responses: {
+    key: "404"
+    value: {
+      description: "Returned when the resource does not exist."
+      schema: {
+        json_schema: {
+          type: STRING
+        }
+      }
+    }
+  }
+};
+
+message Cart {
+  string name = 1;
+  string detail = 2;
+  string brand = 3;
+  string price = 4;
+}
+
+message CreateCartRequest {
+  // @inject_tag: validate:"required,max=20"
+  string name = 1;
+  // @inject_tag: validate:"required"
+  string detail = 2;
+  // @inject_tag: validate:"required"
+  string brand = 3;
+  // @inject_tag: validate:"required"
+  string price = 4;
+}
+
+message CreateCartResponse{
+  string name = 1;
+}
+
+
+service CartService {
+  rpc Create(CreateCartRequest) returns (CreateCartResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/cart"
+      body: "*",
+    };
+  }
+}

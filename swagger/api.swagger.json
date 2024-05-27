@@ -21,6 +21,9 @@
     },
     {
       "name": "UsersService"
+    },
+    {
+      "name": "CartService"
     }
   ],
   "schemes": [
@@ -33,6 +36,45 @@
     "application/json"
   ],
   "paths": {
+    "/api/v1/cart": {
+      "post": {
+        "operationId": "CartService_Create",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/api_v1CreateCartResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/api_v1CreateCartRequest"
+            }
+          }
+        ],
+        "tags": [
+          "CartService"
+        ]
+      }
+    },
     "/api/v1/category": {
       "post": {
         "operationId": "CategoryService_Create",
@@ -211,6 +253,35 @@
         "id": {
           "type": "integer",
           "format": "int32"
+        }
+      }
+    },
+    "api_v1CreateCartRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "@inject_tag: validate:\"required,max=20\""
+        },
+        "detail": {
+          "type": "string",
+          "title": "@inject_tag: validate:\"required\""
+        },
+        "brand": {
+          "type": "string",
+          "title": "@inject_tag: validate:\"required\""
+        },
+        "price": {
+          "type": "string",
+          "title": "@inject_tag: validate:\"required\""
+        }
+      }
+    },
+    "api_v1CreateCartResponse": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
         }
       }
     },
